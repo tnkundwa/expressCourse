@@ -1,0 +1,18 @@
+# Secret environment variables
+.env
+
+# Dependencies (This folder is huge; others should run 'npm install' instead)
+node_modules/
+
+# Local databases (SQLite files)
+*.db
+*.sqlite
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Operating system files
+.DS_Store
+Thumbs.db
