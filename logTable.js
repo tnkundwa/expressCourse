@@ -4,7 +4,7 @@ function logTable(){
     const db = getDBConnection();
     
     try {
-        const hold = db.prepare(`SELECT * FROM users`).all();
+        const hold = db.prepare(`SELECT * FROM cart_items`).all();
         console.log(hold);
     } catch (error) {
         console.log(`Something went wrong creating the table $error.message`);

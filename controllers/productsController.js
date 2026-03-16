@@ -19,7 +19,6 @@ export function getGenres(req, res){
 
 export function getProducts(req, res){
 
-    console.log('!!! getProducts was actually hit !!!');
     console.log('Incoming Query Params:', req.query);
     const db = getDBConnection();
 

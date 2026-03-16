@@ -66,11 +66,15 @@ export async function loginUser(req, res){
 
   try {
     const userAvailable = db.prepare(`SELECT * FROM users WHERE username = ?`).get(username);
-  
+
+    if (!userAvailable){
+      return res.status(401).json({ error: 'Invalid username'});
+    }
+
     const valid = await bcrypt.compare(password, userAvailable.password);
-  
-    if(!userAvailable || !valid){
-      return res.status(401).json({ error: 'Invalid credentials'});
+    
+    if (!valid){
+      return res.status(401).json({ error: 'Invalid password'});
     }
   
     req.session.userId = userAvailable.id;
@@ -82,8 +86,15 @@ export async function loginUser(req, res){
   }
 }
 
-export function logoutUser(req, res){
-    req.session.destroy(
-      res.json({ message: 'Logged out' })
-    )
+export function logoutUser(req, res) {
+  console.log("Session before destroy:", req.session);
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Logout error:', err);
+      return res.status(500).json({ error: 'Could not log out' });
+    }
+    console.log("Session destroyed");
+    res.clearCookie('connect.sid');
+    return res.json({ message: 'Logged out' });
+  });
 }
